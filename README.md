@@ -1,8 +1,3 @@
-# Skinnerbox
-
-> A dead simple forkable NFT vending machine
-
-![box.png](box.png)
 
 # Usage
 
