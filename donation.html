@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+        tip-button:hover 
+            {
+            position:relative;
+            left: 3px;
+            }
+        .tip-button:active 
+            {
+            color:gold;
+            }
+        </style>
+    </head>
+  <body>
+    <img class="tip-button" src="img/SMZ-token-bronze-zero.png" alt="Metamask tip button" style="width:100%;">
+    <div class="message"></div>
+  </body>
+
+    <script>
+    var MY_ADDRESS = '0x34735522D474e001e5C0B36c8397c6803bA6c146'
+    var tipButton = document.querySelector('.tip-button')
+
+    tipButton.addEventListener('click', function() 
+        {
+        if (typeof web3 === 'undefined') 
+            {
+            return renderMessage('<div>You need to install <a href=“https://metmask.io“>MetaMask </a> to use this feature.  <a href=“https://metmask.io“>https://metamask.io</a></div>')
+            }
+
+        var user_address = web3.eth.accounts[0]
+
+        web3.eth.sendTransaction(
+            {
+            to: MY_ADDRESS,
+            from: user_address,
+            value: web3.toWei('0.01', 'ether'),
+            }, 
+            function (err, transactionHash) 
+                {
+                if (err) return renderMessage('There was a problem!: ' + err.message)
+                renderMessage('Thanks for the generosity!!')
+            })
+        })
+
+    function renderMessage (message) 
+        {
+        var messageEl = document.querySelector('.message')
+        messageEl.innerHTML = message
+        }
+    </script>
+</html>
