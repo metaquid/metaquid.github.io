@@ -10,7 +10,6 @@ body {
   background-image: url("img/SMZ-collections.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
-  background-color: rgba(0,0,0,0.25);
   color: white;
   height: 100%;
 }
@@ -28,6 +27,7 @@ body {
   max-width: 300px;
   text-align: center;
   color: red;
+  background: #567;
 }
 .box > *, .minter > *{
   display: block;
