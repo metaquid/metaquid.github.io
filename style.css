@@ -27,6 +27,7 @@ body {
 .box {
   max-width: 300px;
   text-align: center;
+  color: red;
 }
 .box > *, .minter > *{
   display: block;
