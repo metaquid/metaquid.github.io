@@ -27,7 +27,7 @@ body {
   max-width: 300px;
   text-align: center;
   background-color: #aaa;
-  opacity: 0.6
+  opacity: 0.95
 }
 .box > *, .minter > *{
   display: block;
