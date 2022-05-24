@@ -11,6 +11,7 @@
     <button id="btn-logout">Logout</button>
     <button id="btn-get-stats">Refresh Stats</button>
     
+    <!-- stats will go here -->
     <ul id="gas-stats"></ul>
 
     <script>
@@ -18,16 +19,8 @@
       const serverUrl = "https://erqcnezjthq1.usemoralis.com:2053/server";
       const appId = "lZ8ZjLJR0LOMYVuTi8TIj5JwbpTRhZGz3cAMtXHi";
       Moralis.start({ serverUrl, appId });
-
-      function renderGasStats(data) {
-        const container = document.getElementById("gas-stats");
-        container.innerHTML = data
-          .map(function (row, rank) {
-            return `<li>#${rank + 1}: ${Math.round(row.avgGas)} gwei</li>`;
-          })
-          .join("");
-      }
       
+      // LOG IN WITH METAMASK
       async function login() {
         let user = Moralis.User.current();
         if (!user) {
@@ -37,16 +30,10 @@
         getStats();
       }
 
+      // LOG OUT
       async function logOut() {
         await Moralis.User.logOut();
         console.log("logged out");
-      }
-
-      async function getAverageGasPrices() {
-        const results = await Moralis.Cloud.run("getAvgGas");
-        console.log("average user gas prices:", results);
-        
-        renderGasStats(results);
       }
       
       // bind button click handlers
@@ -54,6 +41,7 @@
       document.getElementById("btn-logout").onclick = logOut;
       document.getElementById("btn-get-stats").onclick = getStats;
 
+      // refresh stats
       function getStats() {
         const user = Moralis.User.current();
         if (user) {
@@ -62,6 +50,7 @@
         getAverageGasPrices();
       }
 
+      // HISTORICAL TRANSACTIONS
       async function getUserTransactions(user) {
         // create query
         const query = new Moralis.Query("EthTransactions");
@@ -76,6 +65,7 @@
         console.log("user transactions:", results);
       }
 
+      // REAL-TIME TRANSACTIONS
       async function handleNewTransaction(subscription) {
         // log each new transaction
         subscription.on("create", function (data) {
@@ -83,6 +73,23 @@
         });
       }
 
+      // CLOUD FUNCTION
+      async function getAverageGasPrices() {
+        const results = await Moralis.Cloud.run("getAvgGas");
+        console.log("average user gas prices:", results);
+        
+        renderGasStats(results);
+      }
+      
+      function renderGasStats(data) {
+        const container = document.getElementById("gas-stats");
+        container.innerHTML = data
+          .map(function (row, rank) {
+            return `<li>#${rank + 1}: ${Math.round(row.avgGas)} gwei</li>`;
+          })
+          .join("");
+      }
+      
       //get stats on page load
       getStats();
     </script>
