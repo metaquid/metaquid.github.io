@@ -31,6 +31,11 @@
         console.log("logged out");
       }
 
+      async function getAverageGasPrices() {
+        const results = await Moralis.Cloud.run("getAvgGas");
+        console.log("average user gas prices:", results);
+      }
+      
       // bind button click handlers
       document.getElementById("btn-login").onclick = login;
       document.getElementById("btn-logout").onclick = logOut;
@@ -41,6 +46,7 @@
         if (user) {
           getUserTransactions(user);
         }
+        getAverageGasPrices();
       }
 
       async function getUserTransactions(user) {
