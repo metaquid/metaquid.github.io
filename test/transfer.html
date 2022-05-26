@@ -1,0 +1,53 @@
+<html>
+  <head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.1-rc.0/web3.min.js"></script>
+    <script src="https://unpkg.com/c0js/dist/c0.js"></script>
+    <script>
+    const web3 = new Web3(window.ethereum);
+    const c0 = new C0()
+    document.addEventListener("DOMContentLoaded", async () => {
+      await c0.init({ web3: web3 })
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        let address = document.querySelector("#address").value
+        console.log("address", address)
+        try{
+          let tx = await c0.token.methods(address).withdraw(0).send()
+          document.querySelector("pre").innerHTML = JSON.stringify(tx,null,2)    
+        } catch (e) {
+          document.querySelector("pre").innerHTML = e.message
+        }
+      })
+    })
+    </script>
+    
+    <link rel="stylesheet" href="nft-tools.css">
+    
+  </head>
+  <body>
+    
+    <h1>█ NFTT █</h1>
+    <h3>- NFT Tools - collection of tools for NFT -</h3>
+    <br>
+
+    <input type="button" onclick="window.location.href='transfer.html';" value="TRANSFER" />
+    <button class="button" onclick="myFunction('withdrawal');">TRANSFER</button>
+    <button class="button" onclick="myFunction('ownerof');">OWNERS</button>
+    <button class="button" onclick="myFunction('moralis');">SERVER</button>
+      
+    <div id="withdrawal">
+      <h2>withdraw the amounts accumulated in your NFT contract</h2>
+      <nav>
+        <a class='logo' href="/">withdrawal</a>
+        <form method='post'>
+          <input id='address' type='text' maxlength="50" size="42" placeholder="enter your contract address">
+          <input type='submit' value='just do it'>
+        </form>
+      </nav>
+      <script>withdrawal()</script>
+    </id>
+
+  </body>
+</html>
