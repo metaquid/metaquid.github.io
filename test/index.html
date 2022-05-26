@@ -15,11 +15,11 @@
     function myFunction(myDIV) {
       var x = document.getElementById(myDIV);
       if (x.style.display === "none") {
-        //x.style.display = "block";
-        root.style.setProperty('--' + myDIV, "block");
+        x.style.display = "block";
+        //root.style.setProperty('--' + myDIV, "block");
       } else {
-        //x.style.display = "none";
-        root.style.setProperty('--' + myDIV, "none");
+        x.style.display = "none";
+        //root.style.setProperty('--' + myDIV, "none");
       }
     }
     </script>
