@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <!-- Moralis SDK code -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@3.0.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+    <!-- cell SDK code -->
+    <script src="https://unpkg.com/c0js/dist/c0.js"></script>
+    <script src="https://testnet.factoria.app/f0/token_abi.js"></script>
+     <!-- ipfs code -->
+    <script src="https://unpkg.com/ipfsh@0.0.2/dist/ipfsh.min.js"></script>
+    
+    
+    <script>
+
+    function ownerof() {
+      var web3 = new Web3(window.ethereum);
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        let collection = new web3.eth.Contract([{
+          "inputs": [{
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          }],
+          "name": "ownerOf",
+          "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }],
+          "stateMutability": "view",
+          "type": "function"
+        }], document.querySelector("#address").value);
+        let snapshot = []
+        let start = parseInt(document.querySelector("#start").value)
+        let end = parseInt(document.querySelector("#end").value)
+        for(let i=start; i<=end; i++) {
+          try {
+            let owner = await collection.methods.ownerOf(i).call()
+            snapshot.push(owner)
+            console.log(owner)
+            document.querySelector("#progress").innerHTML = i;
+          } catch (e) {
+            console.log(e)
+          }
+        }
+        document.querySelector("#full").innerHTML = snapshot.join("\n")
+        document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
+      })
+    }
+
+    </script>
+
+    <link rel="stylesheet" href="nft-tools.css">
+
+  </head>
+  <body>
+    
+    <h1>█ NFTT █</h1>
+    <h3>- NFT Tools - collection of tools for NFT -</h3>
+    <br>
+
+    <input type="button" onclick="window.location.href='transfer.html';" value="TRANSFER" />
+    <input type="button" onclick="window.location.href='owners.html';" value="OWNERS" />
+    <input type="button" onclick="window.location.href='server.html';" value="SERVER" />
+    <button class="button" onclick="myFunction('withdrawal');">TRANSFER</button>
+    <button class="button" onclick="myFunction('ownerof');">OWNERS</button>
+    <button class="button" onclick="myFunction('moralis');">SERVER</button>
+
+    <div id="ownerof">
+    <h2>NFT holders for a contract address with incremental tokenIds</h2>
+    <nav>
+      <a class='logo' href="/">ownerof</a>
+      <form>
+      <input id='address' type='text' maxlength="50" size="42" placeholder='enter contract address'>
+      <input id='start' type='text' maxlength="5" size="5" placeholder='start'>
+      <input id='end' type='text' maxlength="5" size="5" placeholder='end'>
+      <input type='submit' value='snapshot'>
+      </form>
+    </nav>
+    <br/>
+    <div class='f'></div>
+    <div class='container'>
+      <h3>progressive number</h3>
+      <div id='progress'></div>
+      <h3>full wallets</h3>
+      <pre id='full'></pre>
+      <h3>deduplicated wallets</h3>
+      <pre id='dedup'></pre>
+    </div>
+    </id>
+    
+    <script>ownerof()</script>
+    
+    
+
+  </body>
+</html>
