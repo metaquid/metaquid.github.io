@@ -9,15 +9,12 @@
      <!-- ipfs code -->
     <script src="https://unpkg.com/ipfsh@0.0.2/dist/ipfsh.min.js"></script>
     
-    <script>
-      const web3 = new Web3(window.ethereum);
-    </script>
     
     <script>
-    //const web3 = new Web3(window.ethereum);
+    const web3a = new Web3(window.ethereum);
     const c0 = new C0()
     document.addEventListener("DOMContentLoaded", async () => {
-      await c0.init({ web3: web3 })
+      await c0.init({ web3: web3a })
       document.querySelector("form").addEventListener("submit", async (e) => {
         e.preventDefault()
         e.stopPropagation()
@@ -60,7 +57,7 @@
     </h3>
     <pre id='dedup'></pre>
     <script>
-    //var web3 = new Web3(window.ethereum);
+    var web3 = new Web3(window.ethereum);
     document.querySelector("form").addEventListener("submit", async (e) => {
       e.preventDefault()
       e.stopPropagation()
