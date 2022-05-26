@@ -78,23 +78,23 @@
   <body>
     
     <h1>NFTT</h1>
-    <h2>[ NFT Tools - collection of tools for NFT ]</h2>
-    
-    
-    <h2>withdraw the amounts accumulated in NFT contract</h2>
+    [ NFT Tools - collection of tools for NFT ]
+    <br>
+    <br>
+    <h2>withdraw the amounts accumulated in your NFT contract</h2>
     <form method='post'>
       <input id='address' type='text' placeholder="enter your contract address">
       <input type='submit'>
     </form>
     
-    
-    <h2>NFT holders for a contract</h2>
+    <br>
+    <h2>NFT holders for a contract address</h2>
     <nav>
     <a class='logo' href="/">ownerof</a>
     <form>
     <input id='address' type='text' placeholder='enter contract address'>
-    <input id='start' type='text' placeholder='tokenId start'>
-    <input id='end' type='text' placeholder='tokenId end'>
+    <input id='start' type='text' maxlength="5" size="5" placeholder='start'>
+    <input id='end' type='text' maxlength="5" size="5" placeholder='end'>
     <input type='submit' value='snapshot'>
     </form>
     <div class='f'></div>
@@ -153,7 +153,7 @@
     </script>
     
     
-    
+    <br>
     <h2>Moralis Gas Stats</h2>
     <button id="btn-login">Moralis Login</button>
     <button id="btn-logout">Logout</button>
