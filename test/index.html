@@ -21,150 +21,7 @@
       }
     }
     </script>
-    
-    <script>
-      function withdrawal(){
-        const web3 = new Web3(window.ethereum);
-        const c0 = new C0()
-        document.addEventListener("DOMContentLoaded", async () => {
-          await c0.init({ web3: web3 })
-          document.querySelector("form").addEventListener("submit", async (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            let address = document.querySelector("#address").value
-            console.log("address", address)
-            try{
-              let tx = await c0.token.methods(address).withdraw(0).send()
-              document.querySelector("pre").innerHTML = JSON.stringify(tx,null,2)    
-            } catch (e) {
-              document.querySelector("pre").innerHTML = e.message
-            }
-          })
-        })
-      }
-    </script>
-    
-    <script>
-      function ownerof(){
-      var web3 = new Web3(window.ethereum);
-      document.querySelector("form").addEventListener("submit", async (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        let collection = new web3.eth.Contract([{
-          "inputs": [{
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          }],
-          "name": "ownerOf",
-          "outputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }],
-          "stateMutability": "view",
-          "type": "function"
-        }], document.querySelector("#address").value);
-        let snapshot = []
-        let start = parseInt(document.querySelector("#start").value)
-        let end = parseInt(document.querySelector("#end").value)
-        for(let i=start; i<=end; i++) {
-          try {
-            let owner = await collection.methods.ownerOf(i).call()
-            snapshot.push(owner)
-            console.log(owner)
-            document.querySelector("#progress").innerHTML = i;
-          } catch (e) {
-            console.log(e)
-          }
-        }
-        document.querySelector("#full").innerHTML = snapshot.join("\n")
-        document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
-      })
-      }
-    </script>
-    
-    
-    <script>
-      function moralis(){
-        // connect to Moralis server
-        const serverUrl = "https://erqcnezjthq1.usemoralis.com:2053/server";
-        const appId = "lZ8ZjLJR0LOMYVuTi8TIj5JwbpTRhZGz3cAMtXHi";
-        Moralis.start({ serverUrl, appId });
 
-        // LOG IN WITH METAMASK
-        async function login() {
-          let user = Moralis.User.current();
-          if (!user) {
-            user = await Moralis.authenticate();
-          }
-          console.log("logged in user:", user);
-          getStats();
-        }
-
-        // LOG OUT
-        async function logOut() {
-          await Moralis.User.logOut();
-          console.log("logged out");
-        }
-
-        // bind button click handlers
-        document.getElementById("btn-login").onclick = login;
-        document.getElementById("btn-logout").onclick = logOut;
-        document.getElementById("btn-get-stats").onclick = getStats;
-
-        // refresh stats
-        function getStats() {
-          const user = Moralis.User.current();
-          if (user) {
-            getUserTransactions(user);
-          }
-          getAverageGasPrices();
-        }
-
-        // HISTORICAL TRANSACTIONS
-        async function getUserTransactions(user) {
-          // create query
-          const query = new Moralis.Query("EthTransactions");
-          query.equalTo("from_address", user.get("ethAddress"));
-
-          // subscribe to query updates
-          const subscription = await query.subscribe();
-          handleNewTransaction(subscription);
-
-          // run query
-          const results = await query.find();
-          console.log("user transactions:", results);
-        }
-
-        // REAL-TIME TRANSACTIONS
-        async function handleNewTransaction(subscription) {
-          // log each new transaction
-          subscription.on("create", function (data) {
-            console.log("new transaction: ", data);
-          });
-        }
-
-        // CLOUD FUNCTION
-        async function getAverageGasPrices() {
-          const results = await Moralis.Cloud.run("getAvgGas");
-          console.log("average user gas prices:", results);
-          renderGasStats(results);
-        }
-
-        function renderGasStats(data) {
-          const container = document.getElementById("gas-stats");
-          container.innerHTML = data
-            .map(function (row, rank) {
-              return `<li>#${rank + 1}: ${Math.round(row.avgGas)} gwei</li>`;
-            })
-            .join("");
-        }
-
-        //get stats on page load
-        getStats();
-      }
-    </script>
     
     
     <style>
@@ -248,7 +105,25 @@
           <input type='submit' value='just do it'>
         </form>
       </nav>
-      <script>withdrawal()</script>
+
+        const web3a = new Web3(window.ethereum);
+        const c0 = new C0()
+        document.addEventListener("DOMContentLoaded", async () => {
+          await c0.init({ web3: web3a })
+          document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            let address = document.querySelector("#address").value
+            console.log("address", address)
+            try{
+              let tx = await c0.token.methods(address).withdraw(0).send()
+              document.querySelector("pre").innerHTML = JSON.stringify(tx,null,2)    
+            } catch (e) {
+              document.querySelector("pre").innerHTML = e.message
+            }
+          })
+        })
+
     </id>
     
     <br>
@@ -280,7 +155,43 @@
       <pre id='dedup'></pre>
     </div>
     </nav>
-    <script>ownerof()</script>
+
+      var web3 = new Web3(window.ethereum);
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        let collection = new web3.eth.Contract([{
+          "inputs": [{
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          }],
+          "name": "ownerOf",
+          "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }],
+          "stateMutability": "view",
+          "type": "function"
+        }], document.querySelector("#address").value);
+        let snapshot = []
+        let start = parseInt(document.querySelector("#start").value)
+        let end = parseInt(document.querySelector("#end").value)
+        for(let i=start; i<=end; i++) {
+          try {
+            let owner = await collection.methods.ownerOf(i).call()
+            snapshot.push(owner)
+            console.log(owner)
+            document.querySelector("#progress").innerHTML = i;
+          } catch (e) {
+            console.log(e)
+          }
+        }
+        document.querySelector("#full").innerHTML = snapshot.join("\n")
+        document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
+      })
+
     </id>
     
     
@@ -298,7 +209,84 @@
         <!-- stats will go here -->
         <ul id="gas-stats"></ul>
       </nav>
-      <script>moralis()</script>
+
+        // connect to Moralis server
+        const serverUrl = "https://erqcnezjthq1.usemoralis.com:2053/server";
+        const appId = "lZ8ZjLJR0LOMYVuTi8TIj5JwbpTRhZGz3cAMtXHi";
+        Moralis.start({ serverUrl, appId });
+
+        // LOG IN WITH METAMASK
+        async function login() {
+          let user = Moralis.User.current();
+          if (!user) {
+            user = await Moralis.authenticate();
+          }
+          console.log("logged in user:", user);
+          getStats();
+        }
+
+        // LOG OUT
+        async function logOut() {
+          await Moralis.User.logOut();
+          console.log("logged out");
+        }
+
+        // bind button click handlers
+        document.getElementById("btn-login").onclick = login;
+        document.getElementById("btn-logout").onclick = logOut;
+        document.getElementById("btn-get-stats").onclick = getStats;
+
+        // refresh stats
+        function getStats() {
+          const user = Moralis.User.current();
+          if (user) {
+            getUserTransactions(user);
+          }
+          getAverageGasPrices();
+        }
+
+        // HISTORICAL TRANSACTIONS
+        async function getUserTransactions(user) {
+          // create query
+          const query = new Moralis.Query("EthTransactions");
+          query.equalTo("from_address", user.get("ethAddress"));
+
+          // subscribe to query updates
+          const subscription = await query.subscribe();
+          handleNewTransaction(subscription);
+
+          // run query
+          const results = await query.find();
+          console.log("user transactions:", results);
+        }
+
+        // REAL-TIME TRANSACTIONS
+        async function handleNewTransaction(subscription) {
+          // log each new transaction
+          subscription.on("create", function (data) {
+            console.log("new transaction: ", data);
+          });
+        }
+
+        // CLOUD FUNCTION
+        async function getAverageGasPrices() {
+          const results = await Moralis.Cloud.run("getAvgGas");
+          console.log("average user gas prices:", results);
+          renderGasStats(results);
+        }
+
+        function renderGasStats(data) {
+          const container = document.getElementById("gas-stats");
+          container.innerHTML = data
+            .map(function (row, rank) {
+              return `<li>#${rank + 1}: ${Math.round(row.avgGas)} gwei</li>`;
+            })
+            .join("");
+        }
+
+        //get stats on page load
+        getStats();
+
     </id>
 
   </body>
