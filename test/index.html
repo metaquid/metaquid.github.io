@@ -15,9 +15,11 @@
     function myFunction(myDIV) {
       var x = document.getElementById(myDIV);
       if (x.style.display === "none") {
-        x.style.display = "block";
+        //x.style.display = "block";
+        root.style.setProperty('--' + myDIV, "block");
       } else {
-        x.style.display = "none";
+        //x.style.display = "none";
+        root.style.setProperty('--' + myDIV, "none");
       }
     }
     </script>
@@ -28,7 +30,13 @@
     body {
       font-family: Sans-serif;
     }
-      
+
+    :root {
+      --withdrawal: none;
+      --ownerof: block;
+      --moralis: none;
+    }
+
     #withdrawal, #ownerof, #moralis {
       width: 100%;
       padding: 50px 0;
@@ -38,13 +46,13 @@
     }
  
     #withdrawal {
-      display: none;
+      display: var(--withdrawal);
     }
     #ownerof {
-      display: block;
+      display: var(--ownerof);
     }
     #moralis {
-      display: none;
+      display: var(--moralis);
     }
 
     nav {
