@@ -12,6 +12,17 @@
     
     
     <script>
+    function myFunction(myDIV) {
+      var x = document.getElementById(myDIV);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+    </script>
+    
+    <script>
     const web3a = new Web3(window.ethereum);
     const c0 = new C0()
     document.addEventListener("DOMContentLoaded", async () => {
@@ -82,16 +93,21 @@
     <br>
     <br>
     <h2>withdraw the amounts accumulated in your NFT contract</h2>
-    <nav>
-    <a class='logo' href="/">withdrawal</a>
-    <form method='post'>
-      <input id='address' type='text' maxlength="50" size="42" placeholder="enter your contract address">
-      <input type='submit' value='just do it'>
-    </form>
-    </nav>
+    <button onclick="myFunction("withdrawal")">withdrawal</button>
+    <div id="withdrawal">
+      <nav>
+        <a class='logo' href="/">withdrawal</a>
+        <form method='post'>
+          <input id='address' type='text' maxlength="50" size="42" placeholder="enter your contract address">
+          <input type='submit' value='just do it'>
+        </form>
+      </nav>
+    </id>
     
     <br>
     <h2>NFT holders for a contract address with incremental tokenIds</h2>
+    <button onclick="myFunction("ownerof")">ownerof</button>
+    <div id="ownerof">
     <nav>
     <a class='logo' href="/">ownerof</a>
     <form>
@@ -102,7 +118,6 @@
     </form>
     <div class='f'></div>
     <a href="https://github.com/papercorp/ownerof">GitHub</a>
-    </nav>
     <div class='container'>
       <h3>
       progress
@@ -117,6 +132,7 @@
       </h3>
       <pre id='dedup'></pre>
     </div>
+    </nav>
     <script>
     var web3 = new Web3(window.ethereum);
     document.querySelector("form").addEventListener("submit", async (e) => {
@@ -154,18 +170,25 @@
       document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
     })
     </script>
+    </id>
     
     
     <br>
-    <h2>Moralis Gas Stats</h2>
-    <nav>
-    <button id="btn-login">Moralis Login</button>
-    <button id="btn-logout">Logout</button>
-    <button id="btn-get-stats">Refresh Stats</button>
-    </nav>
+    <h2>Moralis tools - Gas Stats</h2>
+    <button onclick="myFunction("moralis")">moralis</button>
+    <div id="moralis">
+      <nav>
+        <a class='logo' href="/">moralis</a>
+        <form>
+          <button id="btn-login">Moralis Login</button>
+          <button id="btn-logout">Logout</button>
+          <button id="btn-get-stats">Refresh Stats</button>
+        </form>
 
-    <!-- stats will go here -->
-    <ul id="gas-stats"></ul>
+        <!-- stats will go here -->
+        <ul id="gas-stats"></ul>
+      </nav>
+    </id>
 
     <script>
       // connect to Moralis server
