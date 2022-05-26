@@ -1,7 +1,8 @@
 <html>
   <head>
     <!-- Moralis SDK code -->
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@3.0.0/dist/web3.min.js"></script>
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
     <!-- cell SDK code -->
     <script src="https://unpkg.com/c0js/dist/c0.js"></script>
@@ -113,7 +114,6 @@
       </h3>
       <pre id='dedup'></pre>
     </div>
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@3.0.0/dist/web3.min.js"></script>
     <script>
     var web3 = new Web3(window.ethereum);
     document.querySelector("form").addEventListener("submit", async (e) => {
