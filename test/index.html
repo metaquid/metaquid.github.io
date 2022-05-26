@@ -106,6 +106,7 @@
         </form>
       </nav>
 
+      <script>
         const web3a = new Web3(window.ethereum);
         const c0 = new C0()
         document.addEventListener("DOMContentLoaded", async () => {
@@ -123,7 +124,7 @@
             }
           })
         })
-
+      </script>
     </id>
     
     <br>
@@ -156,6 +157,7 @@
     </div>
     </nav>
 
+    <script>
       var web3 = new Web3(window.ethereum);
       document.querySelector("form").addEventListener("submit", async (e) => {
         e.preventDefault()
@@ -191,7 +193,7 @@
         document.querySelector("#full").innerHTML = snapshot.join("\n")
         document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
       })
-
+    </script>
     </id>
     
     
@@ -210,6 +212,7 @@
         <ul id="gas-stats"></ul>
       </nav>
 
+      <script>
         // connect to Moralis server
         const serverUrl = "https://erqcnezjthq1.usemoralis.com:2053/server";
         const appId = "lZ8ZjLJR0LOMYVuTi8TIj5JwbpTRhZGz3cAMtXHi";
@@ -286,7 +289,7 @@
 
         //get stats on page load
         getStats();
-
+    </script>
     </id>
 
   </body>
