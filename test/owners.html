@@ -47,7 +47,7 @@
             }
           }
         } else {
-          for(let i=end; i>=start; i--) {
+          for(let i=start; i>=end; i--) {
             try {
               let owner = await collection.methods.ownerOf(i).call()
               snapshot.push(owner)
