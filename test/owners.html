@@ -68,12 +68,16 @@
         }
         //
         if(document.getElementById('okfull').checked) {
-          document.querySelector("#full").innerHTML = snapshot.join("\n")
+          fullwallets = "number of owners " + snapshot.length + "\n" + snapshot.join("\n")
+          document.querySelector("#full").innerHTML = fullwallets
         } else {
           document.querySelector("#full").innerHTML = ""
         }
         if(document.getElementById('okdedup').checked) {
-          document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
+          dedupArr = Array.from(new Set(snapshot))
+          dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
+          document.querySelector("#dedup").innerHTML = dedupwallets
+          // document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
         } else {
           document.querySelector("#dedup").innerHTML = ""
         }
