@@ -1,0 +1,220 @@
+<html>
+  <head>
+    <!-- Moralis SDK code -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@3.0.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+    
+    <script>
+
+    const equals = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
+
+    function ownerof(Z) {
+      var web3 = new Web3(window.ethereum);
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        let collection = new web3.eth.Contract([{
+          "inputs": [{
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          }],
+          "name": "ownerOf",
+          "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }],
+          "stateMutability": "view",
+          "type": "function"
+        }], document.querySelector("#address" + Z).value);
+        let snapshot = []
+        let start = parseInt(document.querySelector("#start" + Z).value)
+        let end = parseInt(document.querySelector("#end" + Z).value)
+        if(start < end) {
+          for(let i=start; i<=end; i++) {
+            try {
+              let owner = await collection.methods.ownerOf(i).call()
+              snapshot.push(owner)
+              console.log(owner)
+              document.querySelector("#progress" + Z).innerHTML = i;
+            } catch (e) {
+              console.log(e)
+              document.querySelector("#progress" + Z).innerHTML = "* non-computable collection !"
+              break
+            }
+          }
+        } else {
+          for(let i=start; i>=end; i--) {
+            try {
+              let owner = await collection.methods.ownerOf(i).call()
+              snapshot.push(owner)
+              console.log(owner)
+              document.querySelector("#progress" + Z).innerHTML = i;
+            } catch (e) {
+              console.log(e)
+              document.querySelector("#progress" + Z).innerHTML = "* non-computable collection !"
+              break
+            }
+          }
+        }
+        // at least one of the options must be selected
+        if(!document.getElementById('okfull' + Z).checked && !document.getElementById('okdedup' + Z).checked) {
+          document.getElementById("okdedup" + Z).checked = true
+        }
+        // 
+        if(document.getElementById('okfull' + Z).checked) {
+          fullwallets = "number of owners " + snapshot.length + "\n" + snapshot.join("\n")
+          document.querySelector("#full" + Z).innerHTML = fullwallets
+        } else {
+          document.querySelector("#full" + Z).innerHTML = ""
+        }
+        // 
+        if(document.getElementById('okdedup' + Z).checked) {
+          dedupArr = Array.from(new Set(snapshot))
+          if(equals(snapshot, dedupArr)){
+            // 
+            if(document.getElementById('okfull' + Z).checked) {
+              document.querySelector("#dedup" + Z).innerHTML = "the same list"
+            } else {
+              dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
+              document.querySelector("#dedup" + Z).innerHTML = dedupwallets
+            }
+          } else {
+            dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
+            document.querySelector("#dedup" + Z).innerHTML = dedupwallets
+          }
+        } else {
+          document.querySelector("#dedup" + Z).innerHTML = ""
+        }
+      })
+    }
+    
+    function intdif(Z) {
+      //
+      let dedupA = (document.querySelector("#dedup").innerHTML).split("\n")
+      dedupA.shift(); // remove first element   number of owners _
+      let dedupB = (document.querySelector("#dedup" + Z).innerHTML).split("\n")
+      dedupB.shift(); // remove first element   number of owners _
+      //
+      if(document.getElementById('okint').checked){
+        if(equals(dedupA, dedupB)){
+          document.querySelector("#intersection").innerHTML = "the same list"
+        } else {
+          let intersection = dedupA.filter(x => dedupB.includes(x));
+          document.querySelector("#intersection").innerHTML = "number of owners " + intersection.length + "\n" + intersection.join("\n")
+        }
+      }
+      //
+      if(document.getElementById('okdif').checked){
+        let difference = dedupA.filter(x => !dedupB.includes(x));
+        document.querySelector("#difference").innerHTML = "number of owners " + difference.length + "\n" + difference.join("\n")
+      }
+      //
+      if(document.getElementById('okdifBA').checked){
+        let differenceBA = dedupB.filter(x => !dedupA.includes(x));
+        document.querySelector("#differenceBA").innerHTML = "number of owners " + differenceBA.length + "\n" + differenceBA.join("\n")
+      }
+    }
+
+    </script>
+
+    <link rel="stylesheet" href="./nft-tools.css">
+
+  </head>
+  <body>
+    
+    <a href="./index.html" class="myButton">█ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █</a>
+    <h1>██ NFT-tools ██ </h1>
+    <h3> collection of tools for NFT ecosystem </h3>
+    <br>
+
+    <a href="./transfer.html" class="myButton">TRANSFER</a>
+    <a href="./owners.html" class="myButton">OWNERS</a>
+    <a href="./server.html" class="myButton">SERVER</a>
+
+    <h2>NFT holders for a contract address with incremental tokenIds</h2>
+    "Bored Ape Yacht Club": 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D<br>
+    "CryptoPunks": 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB<br>
+    "Meebits": 0x7Bd29408f11D2bFC23c34f18275bBf23bB716Bc7<br>
+    NOTE: "CryptoPunks" have not similar incremental tokenIDs<br>
+    <nav>
+      <a class='logo' href="/">ownerof A</a>
+      <form>
+      <input id='address' type='text' maxlength="50" size="45" placeholder='enter contract address'>
+      <input id='start' type='text' maxlength="5" size="5" placeholder='start'>
+      <input id='end' type='text' maxlength="5" size="5" placeholder='end'>
+      <input type='submit' value='snapshot'>
+      </form>
+    </nav>
+    <nav>
+      <a class='logo' href="/">ownerof B</a>
+      <form>
+      <input id='addressB' type='text' maxlength="50" size="45" placeholder='enter contract address'>
+      <input id='startB' type='text' maxlength="5" size="5" placeholder='startB'>
+      <input id='endB' type='text' maxlength="5" size="5" placeholder='endB'>
+      <!-- <input type='submit' value='snapshot'> -->
+      </form>
+    </nav>
+    <br/>
+    <div class='f'></div>
+    <div class='container'>
+      <h3>
+        progressive number A 
+        <div id='progress' style="display: inline-block;"></div>
+      </h3>
+      <h3>
+        <input type="checkbox" id="okfull" name="okfull" value="full wallets">
+        full wallets A
+      </h3>
+      <pre id='full'></pre>
+      <h3>
+        <input type="checkbox" id="okdedup" name="okdedup" value="deduplicated wallets">
+        deduplicated wallets A
+      </h3>
+      <pre id='dedup'></pre>
+
+      <h3>
+        progressive number B 
+        <div id='progressB' style="display: inline-block;"></div>
+      </h3>
+      <h3>
+        <input type="checkbox" id="okfullB" name="okfullB" value="full wallets">
+        full wallets B
+      </h3>
+      <pre id='fullB'></pre>
+      <h3>
+        <input type="checkbox" id="okdedupB" name="okdedupB" value="deduplicated wallets">
+        deduplicated wallets B
+      </h3>
+      <pre id='dedupB'></pre>
+
+      <h3>
+        <input type="checkbox" id="okint" name="okint" value="intersected wallets">
+        intersected wallets A X B
+      </h3>
+      <pre id='intersection'></pre>
+      <h3>
+        <input type="checkbox" id="okdif" name="okdif" value="difference wallets">
+        difference wallets A - B
+      </h3>
+      <pre id='difference'></pre>
+      <h3>
+        <input type="checkbox" id="okdifBA" name="okdifBA" value="difference wallets">
+        difference wallets B - A
+      </h3>
+      <pre id='differenceBA'></pre>
+
+    </div>
+    
+    <script>ownerof('')</script>
+    <script>ownerof('B', intdif('B'))</script>
+    
+    <script>setTimeout(function() {intdif('B'); }, 60000);</script>
+    <!-- <script>intdif('B')</script> -->
+    
+    
+
+  </body>
+</html>
