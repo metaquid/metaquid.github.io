@@ -94,14 +94,16 @@
     function intdif(Z) {
       //
       let dedupA = (document.querySelector("#dedup").innerHTML).split("\n")
+      dedupA.shift(); // remove first element   number of owners _
       let dedupB = (document.querySelector("#dedup" + Z).innerHTML).split("\n")
+      dedupB.shift(); // remove first element   number of owners _
       //
       if(document.getElementById('okint').checked){
         if(equals(dedupA, dedupB)){
           document.querySelector("#intersection").innerHTML = "the same list"
         } else {
           let intersection = dedupA.filter(x => dedupB.includes(x));
-          document.querySelector("#intersection").innerHTML = intersection.join("\n")
+          document.querySelector("#intersection").innerHTML = "number of owners " + intersection.length + "\n" + intersection.join("\n")
         }
       }
       //
