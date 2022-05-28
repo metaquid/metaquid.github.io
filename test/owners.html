@@ -129,9 +129,19 @@
     <h2>NFT holders for a contract address with incremental tokenIds</h2>
     "Bored Ape Yacht Club": 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D<br>
     "CryptoPunks": 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB<br>
+    "Meebits": 0x7Bd29408f11D2bFC23c34f18275bBf23bB716Bc7
     NOTE: "CryptoPunks" have not similar incremental tokenIDs<br>
     <nav>
-      <a class='logo' href="/">ownerof</a>
+      <a class='logo' href="/">ownerof A</a>
+      <form>
+      <input id='address' type='text' maxlength="50" size="42" placeholder='enter contract address'>
+      <input id='start' type='text' maxlength="5" size="5" placeholder='start'>
+      <input id='end' type='text' maxlength="5" size="5" placeholder='end'>
+      <input type='submit' value='snapshot'>
+      </form>
+    </nav>
+    <nav>
+      <a class='logo' href="/">ownerof B</a>
       <form>
       <input id='address' type='text' maxlength="50" size="42" placeholder='enter contract address'>
       <input id='start' type='text' maxlength="5" size="5" placeholder='start'>
@@ -142,26 +152,26 @@
     <br/>
     <div class='f'></div>
     <div class='container'>
-      <h3>progressive number</h3>
+      <h3>progressive number A</h3>
       <div id='progress'></div>
       <h3>
         <input type="checkbox" id="okfull" name="okfull" value="full wallets">
-        full wallets
+        full wallets A
       </h3>
       <pre id='full'></pre>
       <h3>
         <input type="checkbox" id="okdedup" name="okdedup" value="deduplicated wallets">
-        deduplicated wallets
+        deduplicated wallets A
       </h3>
       <pre id='dedup'></pre>
       <h3>
         <input type="checkbox" id="okint" name="okint" value="intersected wallets">
-        intersected wallets
+        intersected wallets A
       </h3>
       <pre id='intersection'></pre>
       <h3>
         <input type="checkbox" id="okdif" name="okdif" value="difference wallets">
-        difference wallets
+        difference wallets A
       </h3>
       <pre id='difference'></pre>
     </div>
