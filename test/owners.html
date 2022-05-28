@@ -60,22 +60,22 @@
           }
         }
         // at least one of the options must be selected
-        if(!document.getElementById('okfull').checked && !document.getElementById('okdedup').checked) {
+        if(!document.getElementById('okfull' + Z).checked && !document.getElementById('okdedup' + Z).checked) {
           document.getElementById("okdedup" + Z).checked = true
         }
         // 
-        if(document.getElementById('okfull').checked) {
+        if(document.getElementById('okfull' + Z).checked) {
           fullwallets = "number of owners " + snapshot.length + "\n" + snapshot.join("\n")
           document.querySelector("#full" + Z).innerHTML = fullwallets
         } else {
           document.querySelector("#full" + Z).innerHTML = ""
         }
         // 
-        if(document.getElementById('okdedup').checked) {
+        if(document.getElementById('okdedup' + Z).checked) {
           dedupArr = Array.from(new Set(snapshot))
           if(equals(snapshot, dedupArr)){
             // 
-            if(document.getElementById('okfull').checked) {
+            if(document.getElementById('okfull' + Z).checked) {
               document.querySelector("#dedup" + Z).innerHTML = "the same list"
             } else {
               dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
