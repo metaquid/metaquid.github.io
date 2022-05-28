@@ -104,11 +104,13 @@
           document.querySelector("#intersection").innerHTML = intersection.join("\n")
         }
       }
+      document.querySelector("#intersection").innerHTML = "TEST intersection"
       //
       if(document.getElementById('okdif').checked){
         let difference = dedupA.filter(x => !dedupB.includes(x));
         document.querySelector("#difference").innerHTML = difference.join("\n")
       }
+      document.querySelector("#difference").innerHTML = "TEST difference"
     }
 
     </script>
@@ -185,12 +187,12 @@
 
       <h3>
         <input type="checkbox" id="okint" name="okint" value="intersected wallets">
-        intersected wallets A B
+        intersected wallets A X B
       </h3>
       <pre id='intersection'></pre>
       <h3>
         <input type="checkbox" id="okdif" name="okdif" value="difference wallets">
-        difference wallets A B
+        difference wallets A - B
       </h3>
       <pre id='difference'></pre>
 
