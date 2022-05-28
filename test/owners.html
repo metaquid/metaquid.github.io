@@ -14,7 +14,7 @@
 
     const equals = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 
-    function ownerof() {
+    function ownerof(Z) {
       var web3 = new Web3(window.ethereum);
       document.querySelector("form").addEventListener("submit", async (e) => {
         e.preventDefault()
@@ -33,20 +33,20 @@
           }],
           "stateMutability": "view",
           "type": "function"
-        }], document.querySelector("#address").value);
+        }], document.querySelector("#address" + Z).value);
         let snapshot = []
-        let start = parseInt(document.querySelector("#start").value)
-        let end = parseInt(document.querySelector("#end").value)
+        let start = parseInt(document.querySelector("#start" + Z).value)
+        let end = parseInt(document.querySelector("#end" + Z).value)
         if(start < end) {
           for(let i=start; i<=end; i++) {
             try {
               let owner = await collection.methods.ownerOf(i).call()
               snapshot.push(owner)
               console.log(owner)
-              document.querySelector("#progress").innerHTML = i;
+              document.querySelector("#progress" + Z).innerHTML = i;
             } catch (e) {
               console.log(e)
-              document.querySelector("#progress").innerHTML = "* non-computable collection !"
+              document.querySelector("#progress" + Z).innerHTML = "* non-computable collection !"
               break
             }
           }
@@ -56,24 +56,24 @@
               let owner = await collection.methods.ownerOf(i).call()
               snapshot.push(owner)
               console.log(owner)
-              document.querySelector("#progress").innerHTML = i;
+              document.querySelector("#progress" + Z).innerHTML = i;
             } catch (e) {
               console.log(e)
-              document.querySelector("#progress").innerHTML = "* non-computable collection !"
+              document.querySelector("#progress" + Z).innerHTML = "* non-computable collection !"
               break
             }
           }
         }
         // at least one of the options must be selected
         if(!document.getElementById('okfull').checked && !document.getElementById('okdedup').checked) {
-          document.getElementById("okdedup").checked = true
+          document.getElementById("okdedup" + Z).checked = true
         }
         // 
         if(document.getElementById('okfull').checked) {
           fullwallets = "number of owners " + snapshot.length + "\n" + snapshot.join("\n")
-          document.querySelector("#full").innerHTML = fullwallets
+          document.querySelector("#full" + Z).innerHTML = fullwallets
         } else {
-          document.querySelector("#full").innerHTML = ""
+          document.querySelector("#full" + Z).innerHTML = ""
         }
         // 
         if(document.getElementById('okdedup').checked) {
@@ -81,31 +81,31 @@
           if(equals(snapshot, dedupArr)){
             // 
             if(document.getElementById('okfull').checked) {
-              document.querySelector("#dedup").innerHTML = "the same list"
+              document.querySelector("#dedup" + Z).innerHTML = "the same list"
             } else {
               dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
-              document.querySelector("#dedup").innerHTML = dedupwallets
+              document.querySelector("#dedup" + Z).innerHTML = dedupwallets
             }
           } else {
             dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
-            document.querySelector("#dedup").innerHTML = dedupwallets
+            document.querySelector("#dedup" + Z).innerHTML = dedupwallets
           }
         } else {
-          document.querySelector("#dedup").innerHTML = ""
+          document.querySelector("#dedup" + Z).innerHTML = ""
         }
         //
         if(document.getElementById('okint').checked){
           let intersection = snapshot.filter(x => dedupArr.includes(x));
           if(equals(snapshot, intersection)){
-            document.querySelector("#intersection").innerHTML = "the same list"
+            document.querySelector("#intersection" + Z).innerHTML = "the same list"
           } else {
-            document.querySelector("#intersection").innerHTML = intersection.join("\n")
+            document.querySelector("#intersection" + Z).innerHTML = intersection.join("\n")
           }
         }
         //
         if(document.getElementById('okdif').checked){
           let difference = snapshot.filter(x => !dedupArr.includes(x));
-          document.querySelector("#difference").innerHTML = difference.join("\n")
+          document.querySelector("#difference" + Z).innerHTML = difference.join("\n")
         }
       })
     }
@@ -134,7 +134,7 @@
     <nav>
       <a class='logo' href="/">ownerof A</a>
       <form>
-      <input id='address' type='text' maxlength="50" size="42" placeholder='enter contract address'>
+      <input id='address' type='text' maxlength="50" size="45" placeholder='enter contract address'>
       <input id='start' type='text' maxlength="5" size="5" placeholder='start'>
       <input id='end' type='text' maxlength="5" size="5" placeholder='end'>
       <input type='submit' value='snapshot'>
@@ -143,7 +143,7 @@
     <nav>
       <a class='logo' href="/">ownerof B</a>
       <form>
-      <input id='addressB' type='text' maxlength="50" size="42" placeholder='enter contract address'>
+      <input id='addressB' type='text' maxlength="50" size="45" placeholder='enter contract address'>
       <input id='startB' type='text' maxlength="5" size="5" placeholder='startB'>
       <input id='endB' type='text' maxlength="5" size="5" placeholder='endB'>
       <input type='submit' value='snapshotB'>
