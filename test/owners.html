@@ -62,6 +62,11 @@
             }
           }
         }
+        // at least one of the options must be selected
+        if(!document.getElementById('okfull').checked && !document.getElementById('okdedup').checked) {
+          document.getElementById("okdedup").checked = true
+        }
+        //
         if(document.getElementById('okfull').checked) {
           document.querySelector("#full").innerHTML = snapshot.join("\n")
         }
