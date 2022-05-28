@@ -109,12 +109,12 @@
       //
       if(document.getElementById('okdif').checked){
         let difference = dedupA.filter(x => !dedupB.includes(x));
-        document.querySelector("#difference").innerHTML = difference.join("\n")
+        document.querySelector("#difference").innerHTML = "number of owners " + difference.length + "\n" + difference.join("\n")
       }
       //
       if(document.getElementById('okdifBA').checked){
         let differenceBA = dedupB.filter(x => !dedupA.includes(x));
-        document.querySelector("#differenceBA").innerHTML = differenceBA.join("\n")
+        document.querySelector("#differenceBA").innerHTML = "number of owners " + differenceBA.length + "\n" + differenceBA.join("\n")
       }
     }
 
