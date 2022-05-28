@@ -93,8 +93,8 @@
     
     function intdif(Z) {
       //
-      let dedupA = document.querySelector("#dedup").innerHTML.split("\n")
-      let dedupB = document.querySelector("#dedup" + Z).innerHTML.split("\n")
+      let dedupA = (document.querySelector("#dedup").innerHTML).split("\n")
+      let dedupB = (document.querySelector("#dedup" + Z).innerHTML).split("\n")
       //
       if(document.getElementById('okint').checked){
         if(equals(dedupA, dedupB)){
@@ -104,13 +104,13 @@
           document.querySelector("#intersection").innerHTML = intersection.join("\n")
         }
       }
-      document.querySelector("#intersection").innerHTML = "TEST intersection"
+      //document.querySelector("#intersection").innerHTML = "TEST intersection"
       //
       if(document.getElementById('okdif').checked){
         let difference = dedupA.filter(x => !dedupB.includes(x));
         document.querySelector("#difference").innerHTML = difference.join("\n")
       }
-      document.querySelector("#difference").innerHTML = "TEST difference"
+      //document.querySelector("#difference").innerHTML = "TEST difference"
     }
 
     </script>
@@ -199,9 +199,9 @@
     </div>
     
     <script>ownerof('')</script>
-    <script>ownerof('B')</script>
+    <script>ownerof('B', intdif('B'))</script>
     
-    <script>setTimeout(function() {intdif('B'); }, 10000);</script>
+    <script>setTimeout(function() {intdif('B'); }, 60000);</script>
     <!-- <script>intdif('B')</script> -->
     
     
