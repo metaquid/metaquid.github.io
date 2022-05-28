@@ -69,9 +69,13 @@
         //
         if(document.getElementById('okfull').checked) {
           document.querySelector("#full").innerHTML = snapshot.join("\n")
+        } else {
+          document.querySelector("#full").innerHTML = ""
         }
         if(document.getElementById('okdedup').checked) {
           document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
+        } else {
+          document.querySelector("#dedup").innerHTML = ""
         }
       })
     }
