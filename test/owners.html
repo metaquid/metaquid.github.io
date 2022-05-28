@@ -44,6 +44,8 @@
               document.querySelector("#progress").innerHTML = i;
             } catch (e) {
               console.log(e)
+              document.querySelector("#progress").innerHTML = "INVALID COLLECTION"
+              break
             }
           }
         } else {
@@ -55,6 +57,8 @@
               document.querySelector("#progress").innerHTML = i;
             } catch (e) {
               console.log(e)
+              document.querySelector("#progress").innerHTML = "INVALID COLLECTION"
+              break
             }
           }
         }
@@ -84,6 +88,9 @@
     <a href="./server.html" class="myButton">SERVER</a>
 
     <h2>NFT holders for a contract address with incremental tokenIds</h2>
+    "Bored Ape Yacht Club": 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
+    "CryptoPunks": 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB
+    NOTE: "cryptopunk" have not similar incremental tokenIDs
     <nav>
       <a class='logo' href="/">ownerof</a>
       <form>
