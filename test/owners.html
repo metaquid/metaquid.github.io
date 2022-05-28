@@ -104,13 +104,16 @@
           document.querySelector("#intersection").innerHTML = intersection.join("\n")
         }
       }
-      //document.querySelector("#intersection").innerHTML = "TEST intersection"
       //
       if(document.getElementById('okdif').checked){
         let difference = dedupA.filter(x => !dedupB.includes(x));
         document.querySelector("#difference").innerHTML = difference.join("\n")
       }
-      //document.querySelector("#difference").innerHTML = "TEST difference"
+      //
+      if(document.getElementById('okdifBA').checked){
+        let differenceBA = dedupB.filter(x => !dedupA.includes(x));
+        document.querySelector("#differenceBA").innerHTML = differenceBA.join("\n")
+      }
     }
 
     </script>
@@ -195,6 +198,11 @@
         difference wallets A - B
       </h3>
       <pre id='difference'></pre>
+      <h3>
+        <input type="checkbox" id="okdifBA" name="okdifBA" value="difference wallets">
+        difference wallets B - A
+      </h3>
+      <pre id='differenceBA'></pre>
 
     </div>
     
