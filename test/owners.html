@@ -96,12 +96,16 @@
         //
         if(document.getElementById('okint').checked){
           let intersection = snapshot.filter(x => dedupArr.includes(x));
-          document.querySelector("#intersection").innerHTML = intersection
+          if(equals(snapshot, intersection)){
+            document.querySelector("#intersection").innerHTML = "the same list"
+          } else {
+            document.querySelector("#intersection").innerHTML = intersection.join("\n")
+          }
         }
         //
         if(document.getElementById('okdif').checked){
           let difference = snapshot.filter(x => !dedupArr.includes(x));
-          document.querySelector("#difference").innerHTML = difference
+          document.querySelector("#difference").innerHTML = difference.join("\n")
         }
       })
     }
