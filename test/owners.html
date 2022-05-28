@@ -12,6 +12,8 @@
     
     <script>
 
+    const equals = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
+
     function ownerof() {
       var web3 = new Web3(window.ethereum);
       document.querySelector("form").addEventListener("submit", async (e) => {
@@ -76,14 +78,17 @@
         // 
         if(document.getElementById('okdedup').checked) {
           dedupArr = Array.from(new Set(snapshot))
-          if(snapshot == dedupArr){
-            // we force the display of the data
-            document.getElementById("okfull").checked = true
-            document.querySelector("#dedup").innerHTML = "the same list"
+          if(equals(snapshot, dedupArr)){
+            // 
+            if(document.getElementById('okfull').checked) {
+              document.querySelector("#dedup").innerHTML = "the same list"
+            } else {
+              dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
+              document.querySelector("#dedup").innerHTML = dedupwallets
+            }
           } else {
             dedupwallets = "number of owners " + dedupArr.length + "\n" + dedupArr.join("\n")
             document.querySelector("#dedup").innerHTML = dedupwallets
-            // document.querySelector("#dedup").innerHTML = Array.from(new Set(snapshot)).join("\n")
           }
         } else {
           document.querySelector("#dedup").innerHTML = ""
