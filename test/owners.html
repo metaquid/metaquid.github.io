@@ -88,21 +88,27 @@
         } else {
           document.querySelector("#dedup" + Z).innerHTML = ""
         }
-        //
-        if(document.getElementById('okint').checked){
-          let intersection = snapshot.filter(x => dedupArr.includes(x));
-          if(equals(snapshot, intersection)){
-            document.querySelector("#intersection" + Z).innerHTML = "the same list"
-          } else {
-            document.querySelector("#intersection" + Z).innerHTML = intersection.join("\n")
-          }
-        }
-        //
-        if(document.getElementById('okdif').checked){
-          let difference = snapshot.filter(x => !dedupArr.includes(x));
-          document.querySelector("#difference" + Z).innerHTML = difference.join("\n")
-        }
       })
+    }
+    
+    function intdif(Z) {
+      //
+      let dedupA = document.querySelector("#dedup").innerHTML.split("\n")
+      let dedupB = document.querySelector("#dedup" + Z).innerHTML.split("\n")
+      //
+      if(document.getElementById('okint').checked){
+        if(equals(dedupA, dedupB)){
+          document.querySelector("#intersection").innerHTML = "the same list"
+        } else {
+          let intersection = dedupA.filter(x => dedupB.includes(x));
+          document.querySelector("#intersection").innerHTML = intersection.join("\n")
+        }
+      }
+      //
+      if(document.getElementById('okdif').checked){
+        let difference = dedupA.filter(x => !dedupB.includes(x));
+        document.querySelector("#difference").innerHTML = difference.join("\n")
+      }
     }
 
     </script>
@@ -147,8 +153,10 @@
     <br/>
     <div class='f'></div>
     <div class='container'>
-      <h3>progressive number A</h3>
-      <div id='progress'></div>
+      <h3>
+        progressive number A 
+        <div id='progress'></div>
+      </h3>
       <h3>
         <input type="checkbox" id="okfull" name="okfull" value="full wallets">
         full wallets A
@@ -159,19 +167,11 @@
         deduplicated wallets A
       </h3>
       <pre id='dedup'></pre>
+
       <h3>
-        <input type="checkbox" id="okint" name="okint" value="intersected wallets">
-        intersected wallets A
+        progressive number B 
+        <div id='progressB'></div>
       </h3>
-      <pre id='intersection'></pre>
-      <h3>
-        <input type="checkbox" id="okdif" name="okdif" value="difference wallets">
-        difference wallets A
-      </h3>
-      <pre id='difference'></pre>
-      
-      <h3>progressive number B</h3>
-      <div id='progressB'></div>
       <h3>
         <input type="checkbox" id="okfullB" name="okfullB" value="full wallets">
         full wallets B
@@ -182,20 +182,23 @@
         deduplicated wallets B
       </h3>
       <pre id='dedupB'></pre>
+
       <h3>
-        <input type="checkbox" id="okintB" name="okintB" value="intersected wallets">
-        intersected wallets B
+        <input type="checkbox" id="okint" name="okint" value="intersected wallets">
+        intersected wallets A B
       </h3>
-      <pre id='intersectionB'></pre>
+      <pre id='intersection'></pre>
       <h3>
-        <input type="checkbox" id="okdifB" name="okdifB" value="difference wallets">
-        difference wallets B
+        <input type="checkbox" id="okdif" name="okdif" value="difference wallets">
+        difference wallets A B
       </h3>
-      <pre id='differenceB'></pre>
+      <pre id='difference'></pre>
+
     </div>
     
     <script>ownerof('')</script>
     <script>ownerof('B')</script>
+    <script>intdif('B')</script>
     
     
 
