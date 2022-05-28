@@ -93,6 +93,16 @@
         } else {
           document.querySelector("#dedup").innerHTML = ""
         }
+        //
+        if(document.getElementById('okint').checked){
+          let intersection = snapshot.filter(x => dedupArr.includes(x));
+          document.querySelector("#intersection").innerHTML = intersection
+        }
+        //
+        if(document.getElementById('okdif').checked){
+          let difference = snapshot.filter(x => !dedupArr.includes(x));
+          document.querySelector("#difference").innerHTML = difference
+        }
       })
     }
 
@@ -140,6 +150,16 @@
         deduplicated wallets
       </h3>
       <pre id='dedup'></pre>
+      <h3>
+        <input type="checkbox" id="okint" name="okint" value="intersected wallets">
+        intersected wallets
+      </h3>
+      <pre id='intersection'></pre>
+      <h3>
+        <input type="checkbox" id="okdif" name="okdif" value="difference wallets">
+        difference wallets
+      </h3>
+      <pre id='difference'></pre>
     </div>
     
     <script>ownerof()</script>
